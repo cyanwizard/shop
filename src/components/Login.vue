@@ -37,12 +37,12 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       // 数据绑定
       loginForm: {
-        username: 'abc',
-        password: '123'
+        username: 'admin',
+        password: '123456'
       },
       //   验证规则
       loginFormRules: {
@@ -59,13 +59,22 @@ export default {
   },
   methods: {
     // 重置表单
-    resetLoginForm () {
+    resetLoginForm() {
       this.$refs.loginFormRef.resetFields()
     },
     // 发起请求前先验证合法性
-    login () {
-      this.$refs.loginFormRef.validate(valid => {
-        console.log(valid)
+    login() {
+      // 通过饿了吗ui的Input组件来验证是否合法
+      this.$refs.loginFormRef.validate(async valid => {
+        if (!valid) return
+        const { data: res } = await this.$http.post('login', this.loginForm)
+        // 通过饿了吗ui的Message组件来提示用户成功与否
+        if (res.meta.status !== 200) return this.$message.error('登录失败！')
+        this.$message({ message: '登录成功！', type: 'success' })
+        // 成功过后将服务器返回的token保存到客户端的sessionStorage中(因为sessionStorage的生命周期是从登录成功到关闭浏览器，更符合储存密码)
+        window.sessionStorage.setItem('token', res.data.token)
+        // 通过编程式导航跳转到后台主页(登录成功后的页面)
+        this.$router.push('/home')
       })
     }
   }
