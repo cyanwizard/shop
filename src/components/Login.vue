@@ -69,8 +69,8 @@ export default {
         if (!valid) return
         const { data: res } = await this.$http.post('login', this.loginForm)
         // 通过饿了吗ui的Message组件来提示用户成功与否
-        if (res.meta.status !== 200) return this.$message.error('登录失败！')
-        this.$message({ message: '登录成功！', type: 'success' })
+        if (res.meta.status !== 200) return this.$message.error('登录失败')
+        this.$message({ message: '登录成功', type: 'success' })
         // 成功过后将服务器返回的token保存到客户端的sessionStorage中(因为sessionStorage的生命周期是从登录成功到关闭浏览器，更符合储存密码)
         window.sessionStorage.setItem('token', res.data.token)
         // 通过编程式导航跳转到后台主页(登录成功后的页面)
