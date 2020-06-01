@@ -21,6 +21,7 @@
           :collapse="isCollapse"
           :collapse-transition="false"
           router
+          :default-active="defaultActive"
         >
           <!-- 一级菜单 -->
           <el-submenu :index="index + ''" v-for="(item, index) in menuList" :key="index">
@@ -33,7 +34,7 @@
               :index="'/' + subItem.path"
               v-for="(subItem, target) in item.children"
               :key="target"
-              @click="menuCurrent(subItem)"
+              @click="menuActive(index, target, '/' + subItem.path)"
             >
               <template slot="title">
                 <!-- 动态绑定style属性用js提供的样式改变当前项的icon图标颜色 -->
@@ -68,7 +69,9 @@ export default {
         101: 'icon-shangpin',
         102: 'icon-danju',
         145: 'icon-baobiao'
-      }
+      },
+      // 用于将当前项的index属性赋值给default-active属性
+      defaultActive: ''
     }
   },
   methods: {
@@ -78,18 +81,21 @@ export default {
       this.$router.push('/login')
     },
     // 用于发送axios请求向后台获取菜单栏数据
-    async getMenuList() {
+    async getMenuList(callback) {
       const { data: res } = await this.$http.get('menus')
       // 获取数据失败提示用户
       if (res.meta.status !== 200) return this.$message.error('请求失败')
       this.menuList = res.data
+      // 利用回调函数初始化icon图标样式
+      callback()
     },
     // 用于控制菜单栏折叠后的宽度
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
     },
-    // 用于改变当前项的icon图标样式
-    menuCurrent(targetItem) {
+    // 用于(点击时)改变当前项的icon图标样式 和选中状态
+    menuActive(index, target, path) {
+      // icon图标
       // 先初始化所有
       for (let i = 0; i < this.menuList.length; i++) {
         for (let j = 0; j < this.menuList[i].length; j++) {
@@ -97,12 +103,28 @@ export default {
         }
       }
       // 再给当前项添加样式
-      targetItem.style = { color: '#39c' }
+      this.menuList[index].children[target].style = { color: '#39c' }
+      // 再将当前项的下标存在sessionStorage中用于页面刷新时初始化icon图标样式
+      window.sessionStorage.setItem('defaultActive', [index, target])
+      // 选中状态
+      // 如果path形参存在表示是点击操作，直接赋值给defaultActive 如果path形参不存在则表示是刷新操作(created钩子函数的调用)，从sessionStorage取值赋给defaultActive
+      this.defaultActive = path || window.sessionStorage.getItem('activePath')
+      // 如果是点击操作就将当前项的path存进sessionStorage中
+      path && window.sessionStorage.setItem('activePath', path)
     }
   },
   // created生命周期钩子函数用于在实例创建完成后，但还未挂载到页面时向后台请求数据
   created() {
-    this.getMenuList()
+    // this.defaultActive = window.sessionStorage.getItem('activePath')  初始化操作在menuActive方法中完成
+    // 获取menuList数据并且初始化icon图标样式和选中状态 由于icon图标样式存储在menuList数据中，而获取menuList数据用的是异步函数属于异步操作所以采用回调函数方式初始化icon图标样式
+    this.getMenuList(() => {
+      let param = window.sessionStorage.getItem('defaultActive')
+      // 判断是刷新操作还是登录操作
+      if (param) {
+        param = param.split(',')
+        this.menuActive(param[0], param[1])
+      }
+    })
   }
 }
 </script>
@@ -117,6 +139,7 @@ export default {
   background-color: #036;
   justify-content: space-between;
   align-items: center;
+
   div {
     display: flex;
     color: #fff;
@@ -143,10 +166,14 @@ export default {
     letter-spacing: 0.2em;
     cursor: pointer;
   }
+
   .el-menu {
     border-right-style: none;
     .iconfont {
       margin-right: 10px;
+    }
+    i {
+      color: #fff;
     }
   }
 }

@@ -6,3 +6,11 @@ body,
     padding: 0;
     height: 100%;
 }
+
+.el-card {
+    margin: 15px 0;
+}
+
+.el-table {
+    margin: 15px 0;
+}
