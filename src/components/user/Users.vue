@@ -6,6 +6,7 @@
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
+    
     <!-- 卡片视图区域 -->
     <el-card class="box-card">
       <!-- 搜索与添加区域 -->
@@ -19,6 +20,7 @@
           <el-button type="primary" @click="addDialogVisible = true">添加用户</el-button>
         </el-col>
       </el-row>
+
       <!-- 用户列表展示区域 -->
       <el-table :data="userList" border style="width: 100%" stripe>
         <el-table-column type="index"></el-table-column>
@@ -52,6 +54,7 @@
           </template>
         </el-table-column>
       </el-table>
+      
       <!-- Pagination分页区域 -->
       <el-pagination
         @size-change="handleSizeChange"
@@ -63,6 +66,7 @@
         :total="total"
       ></el-pagination>
     </el-card>
+
     <!-- 添加用户弹出框区域 -->
     <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
       <!-- 输入表单 -->
@@ -86,6 +90,7 @@
         <el-button @click="addDialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>
+
     <!-- 修改用户弹出框区域 -->
     <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="50%" @close="editDialogClosed">
       <!-- 输入表单 -->
