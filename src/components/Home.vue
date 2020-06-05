@@ -21,7 +21,7 @@
           :collapse="isCollapse"
           :collapse-transition="false"
           router
-          :default-active="defaultActive"
+          :default-active="activePath"
         >
           <!-- 一级菜单 -->
           <el-submenu :index="index + ''" v-for="(item, index) in menuList" :key="index">
@@ -71,7 +71,7 @@ export default {
         145: 'icon-baobiao'
       },
       // 用于将当前项的index属性赋值给default-active属性
-      defaultActive: ''
+      activePath: ''
     }
   },
   methods: {
@@ -107,15 +107,15 @@ export default {
       // 再将当前项的下标存在sessionStorage中用于页面刷新时初始化icon图标样式
       window.sessionStorage.setItem('defaultActive', [index, target])
       // 选中状态
-      // 如果path形参存在表示是点击操作，直接赋值给defaultActive 如果path形参不存在则表示是刷新操作(created钩子函数的调用)，从sessionStorage取值赋给defaultActive
-      this.defaultActive = path || window.sessionStorage.getItem('activePath')
+      // 如果path形参存在表示是点击操作，直接赋值给activePath 如果path形参不存在则表示是刷新操作(created钩子函数的调用)，从sessionStorage取值赋给defaultActive
+      this.activePath = path || window.sessionStorage.getItem('activePath')
       // 如果是点击操作就将当前项的path存进sessionStorage中
       path && window.sessionStorage.setItem('activePath', path)
     }
   },
   // created生命周期钩子函数用于在实例创建完成后，但还未挂载到页面时向后台请求数据
   created() {
-    // this.defaultActive = window.sessionStorage.getItem('activePath')  初始化操作在menuActive方法中完成
+    // this.activePath = window.sessionStorage.getItem('activePath')  初始化操作在menuActive方法中完成
     // 获取menuList数据并且初始化icon图标样式和选中状态 由于icon图标样式存储在menuList数据中，而获取menuList数据用的是异步函数属于异步操作所以采用回调函数方式初始化icon图标样式
     this.getMenuList(() => {
       let param = window.sessionStorage.getItem('defaultActive')
