@@ -13,6 +13,7 @@
       <el-aside :width="isCollapse ? '64px' : '200px'">
         <!-- 收缩按钮 -->
         <div @click="toggleCollapse">|||</div>
+        <!-- 菜单栏 -->
         <el-menu
           background-color="#369"
           text-color="#fff"
@@ -98,8 +99,8 @@ export default {
       // icon图标
       // 先初始化所有
       for (let i = 0; i < this.menuList.length; i++) {
-        for (let j = 0; j < this.menuList[i].length; j++) {
-          this.menuList[i].children[j].style = { color: '#000' }
+        for (let j = 0; j < this.menuList[i].children.length; j++) {
+          this.menuList[i].children[j].style = { color: '#fff' }
         }
       }
       // 再给当前项添加样式
@@ -174,6 +175,7 @@ export default {
     }
     i {
       color: #fff;
+      transition: color .2s;
     }
   }
 }

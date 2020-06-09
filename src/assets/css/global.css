@@ -6,11 +6,17 @@ body,
     padding: 0;
     height: 100%;
 }
-
-.el-card {
-    margin: 15px 0;
+/* 面包屑样式 */
+.el-breadcrumb {
+    margin-bottom: 15px;
+    font-size: 12px;
 }
-
+/* 表格样式 */
 .el-table {
     margin: 15px 0;
+    font-size: 12px;
+}
+/* 菜单栏项后的三角箭头样式 */
+.el-submenu__title i {
+    color: #fff !important;
 }
