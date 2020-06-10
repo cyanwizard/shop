@@ -8,6 +8,8 @@ import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
 // 引入axios
 import axios from 'axios'
+// 引入树形表格组件
+import TreeTable from 'vue-table-with-tree-grid'
 
 // 设置axios的根路径
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
@@ -18,6 +20,10 @@ axios.interceptors.request.use(config => {
 })
 // 将axios挂载到Vue的原型对象上，以便在所有组件上使用
 Vue.prototype.$http = axios
+
+// 将树形表格组件注册为vue全局组件
+Vue.component('tree-table', TreeTable)
+
 // 开启错误提示(常用于开发环境)
 Vue.config.productionTip = false
 

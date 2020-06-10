@@ -1,0 +1,10 @@
+1.Home组件——从子路由返回home路由时菜单栏并未自动收缩
+
+2.Cate组件——cascader级联选择器数据过多时菜单会上下撑满整个屏幕而不是显示滚动条
+  已解决：	在global.css文件下设置
+	.el-cascader__dropdown {
+	height: 200px;
+	}
+	.el-cascader-panel {
+	height: 200px;
+	}

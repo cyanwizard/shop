@@ -20,3 +20,11 @@ body,
 .el-submenu__title i {
     color: #fff !important;
 }
+
+.el-cascader__dropdown {
+    height: 300px;
+}
+
+.el-cascader-panel {
+    height: 300px;
+}
