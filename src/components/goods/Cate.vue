@@ -296,12 +296,19 @@ export default {
     },
     // 提交编辑
     editCate() {
+      // 是否符合所有验证规则
       this.$refs.editCateRef.validate(async valid => {
+        // 不符合返回
         if (!valid) return
+        // 发送请求
         const { data: res } = await this.$http.put('categories/' + this.editCateForm.cat_id, { cat_name: this.editCateForm.cat_name })
+        // 失败提示用户
         if (res.meta.status !== 200) return this.$message.error('编辑分类失败')
+        // 成功提示用户
         this.$message.success('编辑分类成功')
+        // 跟新列表
         this.getCateList()
+        // 隐藏对话框
         this.editCateDialogVisible = false
       })
     },
