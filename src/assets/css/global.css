@@ -20,11 +20,12 @@ body,
 .el-submenu__title i {
     color: #fff !important;
 }
-
+/* 级联选择器下拉框的样式 */
 .el-cascader__dropdown {
     height: 300px;
+    overflow-y: hidden;
 }
-
+/* 级联选择器下拉框内容的样式 */
 .el-cascader-panel {
-    height: 300px;
+    height: 318px;
 }

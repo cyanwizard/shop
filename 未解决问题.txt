@@ -1,10 +1,11 @@
 1.Home组件——从子路由返回home路由时菜单栏并未自动收缩
 
 2.Cate组件——cascader级联选择器数据过多时菜单会上下撑满整个屏幕而不是显示滚动条
-  已解决：	在global.css文件下设置
+  已解决：	在global.css文件下设置（一个是下拉框、一个是下拉框的内容；之所以设置的高度不一且下拉框设置了overflow-y: hidden，是为了影藏下拉框的y轴滚动条）
 	.el-cascader__dropdown {
-	height: 200px;
+    	    height: 300px;
+    	    overflow-y: hidden;  
 	}
 	.el-cascader-panel {
-	height: 200px;
+    	    height: 318px;
 	}

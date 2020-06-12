@@ -291,6 +291,7 @@ export default {
     // 编辑分类
     // 显示编辑
     showEditCateDialog(cate) {
+      // 这里可以直接赋值给editCateForm，因为使用的是tree-table组件，不会存在双方的数据绑定(即在表单里输入内容时，列表里对应的值不会改变)
       this.editCateForm = cate
       this.editCateDialogVisible = true
     },
