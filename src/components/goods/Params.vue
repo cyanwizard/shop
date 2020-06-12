@@ -284,7 +284,7 @@ export default {
 
     // 发送请求
     // 修改参数请求
-    async handleEditPrarm(row, callback) {
+    async handleEditparam(row, callback) {
       // 发送
       const { data: res } = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, {
         attr_name: row.attr_name,
@@ -322,7 +322,7 @@ export default {
       // 如果输入框内容不为空则将新标签push到attr_vals中，再保存数据(发送请求)
       if (row.inputValue.trim().length) {
         row.attr_vals.push(row.inputValue.trim())
-        this.handleEditPrarm(row)
+        this.handleEditparam(row)
       }
       // 显示button按钮
       row.inputVisible = false
@@ -334,7 +334,7 @@ export default {
       // 先从attr_vals中删除标签
       row.attr_vals.splice(i, 1)
       // 再保存(更新)到数据库中
-      this.handleEditPrarm(row)
+      this.handleEditparam(row)
     },
     // 点击添加tag按钮时触发
     showInput(row) {
@@ -394,7 +394,7 @@ export default {
         // 未通过取消此次操作
         if (!valid) return
         // 通过发送请求修改参数并且重新渲染参数列表
-        this.handleEditPrarm(this.editParamForm, this.getParamList)
+        this.handleEditparam(this.editParamForm, this.getParamList)
         // 影藏对话框
         this.editParamDialogVisible = false
       })
