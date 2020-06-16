@@ -29,3 +29,14 @@ body,
 .el-cascader-panel {
     height: 318px;
 }
+/* 步骤条的上下边距和字体大小 */
+.el-steps {
+    margin: 15px 0;
+}
+.el-step__title {
+    font-size: 13px;
+}
+/* 重置复选框(添加商品动态参数)样式 */
+.el-checkbox {
+    margin: 5px 10px !important;
+}

@@ -229,9 +229,11 @@ export default {
   },
   methods: {
     // 获取用户列表
-    async getUserList() {
+    async getUserList(callback) {
       const { data: res } = await this.$http.get('/users', { params: this.queryInfo })
       if (res.meta.status !== 200) return this.$message.error('请求用户数据失败')
+      // 返回顶部(用于更改页码大小时使用)
+      callback instanceof Function && callback()
       this.userList = res.data.users
       this.total = res.data.total
     },
@@ -246,7 +248,7 @@ export default {
     // 监听pagesize改变
     handleSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
-      this.getUserList()
+      this.getUserList(function () { scroll(0, 0) })
     },
     // 监听页码值改变
     handleCurrentChange(newPage) {

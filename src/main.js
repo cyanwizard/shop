@@ -24,6 +24,20 @@ Vue.prototype.$http = axios
 // 将树形表格组件注册为vue全局组件
 Vue.component('tree-table', TreeTable)
 
+// 注册全局过滤器(时间格式)
+Vue.filter('dateFormat', function (value) {
+  const dt = new Date(value)
+
+  const y = dt.getFullYear()
+  const m = (dt.getMonth() + 1 + '').padStart(2, '0')
+  const d = (dt.getDate() + '').padStart(2, '0')
+  const hh = (dt.getHours() + '').padStart(2, '0')
+  const mm = (dt.getMinutes() + '').padStart(2, '0')
+  const ss = (dt.getSeconds() + '').padStart(2, '0')
+
+  return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+})
+
 // 开启错误提示(常用于开发环境)
 Vue.config.productionTip = false
 

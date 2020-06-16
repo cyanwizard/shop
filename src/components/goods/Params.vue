@@ -289,7 +289,7 @@ export default {
       const { data: res } = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, {
         attr_name: row.attr_name,
         attr_sel: row.attr_sel,
-        // 判断该值是否为字符串，是就直接赋值，否则为数组，通过join转为字符串再赋值
+        // 判断该值是否为数组，是就通过join转为字符串再赋值，否则直接赋值
         attr_vals: row.attr_vals instanceof Array ? row.attr_vals.join(' ') : row.attr_vals
       })
       // 失败提示用户

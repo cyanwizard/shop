@@ -216,11 +216,13 @@ export default {
 
   methods: {
     // 获取商品分类列表数据
-    async getCateList() {
+    async getCateList(callback) {
       // 发送请求获取数据
       const { data: res } = await this.$http.get('categories', { params: this.queryInfo })
       // 失败提示用户
       if (res.meta.status !== 200) return this.$message.error('获取分类列表失败')
+      // 返回顶部(用于更改页码大小时使用)
+      callback instanceof Function && callback()
       // 成功赋值给cataList
       this.cateList = res.data.result
       // 为总数据条数赋值
@@ -231,7 +233,8 @@ export default {
     // 监听页码大小变化
     handleSizeChange(val) {
       this.queryInfo.pagesize = val
-      this.getCateList()
+      // 更新列表并且定位到页面顶部
+      this.getCateList(function () { scroll(0, 0) })
     },
     // 监听页码变化
     handleCurrentChange(val) {
